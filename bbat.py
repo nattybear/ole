@@ -1,4 +1,4 @@
-from ole_headerblock_info import fp, array_BBAT_depot_members, startblock_property
+from header import fp, array_BBAT_depot_members, startblock_property
 from struct import unpack
 
 BBAT = '' # Big Block Allocation Table
