@@ -30,7 +30,7 @@ def table2chain(table, entry):
             print '[*] Special block'
             return chain
         elif entry == -2:
-            print '[*] End of chain'
+            #print '[*] End of chain'
             return chain
         elif entry == -1:
             print '[*] Useless block'
