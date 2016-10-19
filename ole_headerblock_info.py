@@ -35,9 +35,10 @@ num_SBAT_depot = hex2int(bin2hex(fp, 64, 4))
 tmp = bin2hex(fp, 76, num_BBAT_depot * 4)
 array_BBAT_depot_members = unpack('I'*num_BBAT_depot, tmp)
 
-print 'Magic ID : ', split2(hexlify(magicid))
-print 'Number of BBAT Depot : ', num_BBAT_depot
-print 'Start block of Property : ', startblock_property
-print 'Start block of SBAT : ', startblock_SBAT
-print 'Number of SBAT Depot : ', num_SBAT_depot
-print 'Array of BBAT Depot members : ', array_BBAT_depot_members
+if __name__ == '__main__':
+    print 'Magic ID : ', split2(hexlify(magicid))
+    print 'Number of BBAT Depot : ', num_BBAT_depot
+    print 'Start block of Property : ', startblock_property
+    print 'Start block of SBAT : ', startblock_SBAT
+    print 'Number of SBAT Depot : ', num_SBAT_depot
+    print 'Array of BBAT Depot members : ', array_BBAT_depot_members
