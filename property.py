@@ -22,7 +22,7 @@ def single_property(fp, offset):
         return
     
     #print "Size of Property's name : ", size_pname
-    print "Name of Property : ", pname
+    print pname
     
     return
     
@@ -35,8 +35,10 @@ def block2property(fp, block_num):
     for j in range(4):
         j2 = i2 + (j * 0x80)
         single_property(fp, j2)
+    return
     
 property_storage = chain2storage(chain)
+property_list = []
 
 if __name__ == '__main__':
     fp2 = open('c:\\users\\user12\\ole\\property_storage.dump', 'wb')
@@ -47,4 +49,3 @@ if __name__ == '__main__':
     
     for i in chain:
         block2property(fp, i)
-    
