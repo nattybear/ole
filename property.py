@@ -34,6 +34,12 @@ class Property:
         
         dir = bin2hex(storage, i+0x4C, 4)
         self.dir = unpack('i', dir)[0]
+        
+        start = bin2hex(storage, i+0x74, 4)
+        self.start = unpack('i', start)[0]
+        
+        psize = bin2hex(storage, i+0x78, 4)
+        self.psize = unpack('I', psize)[0]
 
 def chain2storage(chain):
     storage = ''
@@ -61,6 +67,8 @@ for i in range(count):
     t['prev'] = pro.prev
     t['next'] = pro.next
     t['dir'] = pro.dir
+    t['start'] = pro.start
+    t['psize'] = pro.psize
     property_list.append(t)
 
 if __name__ == '__main__':
@@ -80,5 +88,6 @@ if __name__ == '__main__':
         print '  [-] Prev : ', test.prev
         print '  [-] Next : ', test.next
         print '  [-] Dir : ', test.dir
-    
+        print '  [-] Start : ', test.start
+        print '  [-] Size : ', test.psize
     
