@@ -9,6 +9,12 @@ print '[*] Number of SBAT Depot : ', num_SBAT_depot
 chain = table2chain(BBAT, startblock_SBAT)
 SBAT = array2table(fp, chain, 0x200)
 
+root_start = property_list[0]['start']
+root_chain = table2chain(BBAT, root_start)
+
+# Small Data Block
+SDB = array2table(fp, root_chain, 0x200)
+
 if __name__ == '__main__':
     fp2 = open('c:\\users\\user12\\ole\\SBAT.dump', 'wb')
     fp2.write(SBAT)
@@ -16,8 +22,15 @@ if __name__ == '__main__':
     
     print '[*] SBAT.dump saved'
     
-    pnum = int(argv[1])
+    fp3 = open('c:\\users\\user12\\ole\\SBD.dump', 'wb')
+    fp3.write(SDB)
+    fp3.close()
     
-    pchain = table2chain(SBAT, property_list[pnum]['start'])
+    print '[*] SDB.dump saved'
     
-    print pchain
+    try:
+        pnum = int(argv[1])
+        pchain = table2chain(SBAT, property_list[pnum]['start'])
+        print pchain
+    except:
+        pass
