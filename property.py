@@ -52,6 +52,17 @@ fstorage = StringIO(property_storage)
 storage_size = len(property_storage)
 count = size2count(storage_size)
 
+property_list = []
+for i in range(count):
+    pro = Property(fstorage, i)
+    t = {}
+    t['name'] = pro.name
+    t['type'] = pro.type
+    t['prev'] = pro.prev
+    t['next'] = pro.next
+    t['dir'] = pro.dir
+    property_list.append(t)
+
 if __name__ == '__main__':
     fp2 = open('c:\\users\\user12\\ole\\property_storage.dump', 'wb')
     fp2.write(property_storage)
@@ -69,4 +80,5 @@ if __name__ == '__main__':
         print '  [-] Prev : ', test.prev
         print '  [-] Next : ', test.next
         print '  [-] Dir : ', test.dir
+    
     
