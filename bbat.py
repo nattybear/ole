@@ -1,13 +1,14 @@
-from header import fp, array_BBAT_depot_members, startblock_property
 from struct import unpack
+from header import fp, array_BBAT_depot_members, startblock_property
+
 
 BBAT = '' # Big Block Allocation Table
 
 def read_block(fp, num_block, size):
     num = num_block + 1
-    offset = num * 0x200
+    offset = num * size
     fp.seek(offset)
-    buf = fp.read(0x200)
+    buf = fp.read(size)
     return buf
     
 def array2table(fp, array, size):
