@@ -7,6 +7,8 @@ class Property:
     def __init__(self, storage, num):
         i = num * 0x80
         
+        self.num = num
+        
         size = bin2hex(storage, i+0x40, 2)
         self.size = unpack('H', size)[0]
         
@@ -40,11 +42,15 @@ def chain2storage(chain):
         storage += buf
     return storage
     
+def size2count(size):
+    count = size / (0x200 / 4)
+    return count
+    
 property_storage = chain2storage(chain)
-
 fstorage = StringIO(property_storage)
 
-test = Property(fstorage, 0)
+storage_size = len(property_storage)
+count = size2count(storage_size)
 
 if __name__ == '__main__':
     fp2 = open('c:\\users\\user12\\ole\\property_storage.dump', 'wb')
@@ -52,9 +58,15 @@ if __name__ == '__main__':
     fp2.close()
     
     print '[*] property_storage.dump saved'
+    print ''
     
-    print 'Name : ', test.name
-    print 'Type : ', test.type
-    print 'Prev : ', test.prev
-    print 'Next : ', test.next
-    print 'Dir : ', test.dir
+    for i in range(count):
+        test = Property(fstorage, i)
+        if test.size == 0:
+            break
+        print '[' + str(i) + '] ', test.name
+        print '  [-] Type : ', test.type
+        print '  [-] Prev : ', test.prev
+        print '  [-] Next : ', test.next
+        print '  [-] Dir : ', test.dir
+    
