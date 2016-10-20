@@ -14,7 +14,7 @@ def read_block(fp, num_block, size):
 def array2table(fp, array, size):
     table = ''
     for i in array:
-        buf = read_block(fp, i, 0x200)
+        buf = read_block(fp, i, size)
         table += buf
     return table
     
