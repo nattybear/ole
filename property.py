@@ -1,6 +1,37 @@
 from struct import unpack
+from StringIO import StringIO
 from header import fp, bin2hex
 from bbat import chain, read_block
+
+class Property:
+    def __init__(self, storage, num):
+        i = num * 0x80
+        
+        size = bin2hex(storage, i+0x40, 2)
+        self.size = unpack('H', size)[0]
+        
+        name = bin2hex(storage, i, self.size)
+        self.name = name.replace(b'\x00', '')
+        
+        type = bin2hex(storage, i+0x42, 1)
+        type = unpack('b', type)[0]
+        if type == 1:
+            self.type = 'storage'
+        elif type == 2:
+            self.type = 'stream'
+        elif type == 5:
+            self.type = 'root'
+        else:
+            self.type = None
+            
+        prev = bin2hex(storage, i+0x44, 4)
+        self.prev = unpack('i', prev)[0]
+        
+        next = bin2hex(storage, i+0x48, 4)
+        self.next = unpack('i', next)[0]
+        
+        dir = bin2hex(storage, i+0x4C, 4)
+        self.dir = unpack('i', dir)[0]
 
 def chain2storage(chain):
     storage = ''
@@ -9,36 +40,11 @@ def chain2storage(chain):
         storage += buf
     return storage
     
-def single_property(fp, offset):
-    i = offset + 0x40
-    tmp = bin2hex(fp, i, 2)
-    size_pname = hex2short(tmp)
-    
-    i = offset
-    tmp = bin2hex(fp, i, size_pname)
-    pname = tmp.replace(b'\x00', '')
-    
-    if size_pname == 0:
-        return
-    
-    #print "Size of Property's name : ", size_pname
-    print pname
-    
-    return
-    
-def hex2short(buf):
-    return unpack('H', buf)[0]
-    
-def block2property(fp, block_num):
-    i = block_num + 1
-    i2 = i * 0x200
-    for j in range(4):
-        j2 = i2 + (j * 0x80)
-        single_property(fp, j2)
-    return
-    
 property_storage = chain2storage(chain)
-property_list = []
+
+fstorage = StringIO(property_storage)
+
+test = Property(fstorage, 0)
 
 if __name__ == '__main__':
     fp2 = open('c:\\users\\user12\\ole\\property_storage.dump', 'wb')
@@ -47,5 +53,8 @@ if __name__ == '__main__':
     
     print '[*] property_storage.dump saved'
     
-    for i in chain:
-        block2property(fp, i)
+    print 'Name : ', test.name
+    print 'Type : ', test.type
+    print 'Prev : ', test.prev
+    print 'Next : ', test.next
+    print 'Dir : ', test.dir
