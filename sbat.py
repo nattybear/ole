@@ -37,16 +37,15 @@ if __name__ == '__main__':
     
     print '[*] SDB.dump saved'
     
-    try:
-        pnum = argv[1]
-        pdata = pnum2data(SBAT, property_list, argv[1], fSDB)
-        
-        fname = property_list[int(pnum)]['name'] + '.dump'
-        fp4 = open(fname, 'wb')
-        fp4.write(pdata)
-        fp4.close()
-        
-        print '[*]', fname, 'saved'
     
-    except:
-        pass
+    pnum = argv[1]
+    pdata = pnum2data(SBAT, property_list, argv[1], fSDB)
+    
+    fname = property_list[int(pnum)]['name'] + '.dump'
+    fp4 = open(fname, 'wb')
+    fp4.write(pdata)
+    fp4.close()
+    
+    print '[*]', fname, 'saved'
+
+    
